@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    {% for titles in title %}
+   <h2>{{ titles.title}}</h2>
+    <h3>{{ titles.content}}</h3>
+    {% endfor %}
+
+
+<div>
+            {% for titles in title %}
+            <form
+                action="{% url 'comment:post_comment' titles.id %}"
+                method="POST"
+            >
+                {% endfor %}
+            {% csrf_token %}
+                <div>
+                    <label for="body">
+                        <strong>
+                            我也要发言：
+                        </strong>
+                    </label>
+                    <textarea
+                        type="text"
+                        class="form-control"
+                        id="body"
+                        name="body"
+                        rows="2"></textarea>
+                </div>
+                <!-- 提交按钮 -->
+                <button type="submit">发送</button>
+            </form>
+        </div>
+
+
+ <h4>共有{{ comments.count }}条评论</h4>
+    <div>
+        {% for comment in comments %}
+        有人在
+        {{ comment.created|date:"Y-m-d H:i:s" }}时说：
+            <pre style="font-family: inherit; font-size: 1em;">
+{{ comment.body }}</pre>
+        {% endfor %}
+    </div>
+
+
+
+</body>
+</html>
